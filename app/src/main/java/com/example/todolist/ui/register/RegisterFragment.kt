@@ -1,10 +1,12 @@
 package com.example.todolist.ui.register
 
+import android.app.Notification.Action
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.todolist.R
 import com.example.todolist.core.Constants
 import com.example.todolist.core.NetworkResult
@@ -19,6 +21,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentRegisterBinding.bind(view)
+
 
         binding.apply {
 
@@ -44,19 +47,21 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                                 Toast.LENGTH_SHORT
                             )
                                 .show()
-                            Constants.TOKEN = it.data?.token ?: ""
+                            Constants.TOKEN = it.data?.token ?:""
                             Toast.makeText(requireContext(), "is successful", Toast.LENGTH_SHORT).show()
+
+                            findNavController().navigate(R.id.action_registerFragment_to_listFragment)
+
                         }
 
                         is NetworkResult.Error -> {
                             setLoading(false)
-                            Snackbar.make(btRegister, it.message.toString(), Snackbar.LENGTH_SHORT)
+                            Snackbar.make(btRegister, it.message.toString(), Snackbar.LENGTH_LONG)
                                 .show()
                         }
 
                     }
                 }
-
             }
         }
     }

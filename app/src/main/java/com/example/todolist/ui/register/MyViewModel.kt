@@ -16,6 +16,7 @@ class MyViewModel : ViewModel() {
     private val _register: MutableLiveData<NetworkResult<loginResponse>> = MutableLiveData()
     val register: LiveData<NetworkResult<loginResponse>> = _register
 
+
     fun register(user: Register) {
         _register.value = NetworkResult.Loading()
         viewModelScope.launch {
